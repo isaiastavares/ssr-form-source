@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var currentSrc = iframe.src;
         iframe.src = currentSrc + (currentSrc.includes('?') ? '&' : '?') + 'source=' + encodeURIComponent(window.location.href);
 
-        iframe.addEventListener("load", insertScriptInSubmittedMessage);
+        iframe.addEventListener("load", observeDOMChanges(iframe));
     }
 });
 
@@ -23,9 +23,8 @@ const createDivElement = (className, dataSrc) => {
     return div;
 };
 
-function insertScriptInSubmittedMessage(iframe) {
-    console.log('loading iframe');
-    var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+const insertScriptInSubmittedMessage = (iframe) => {
+    var iframeDocument = iframe.contentDocument;
     var submittedMessageDiv = iframeDocument.querySelector(".submitted-message");
 
     if (submittedMessageDiv) {
@@ -35,4 +34,20 @@ function insertScriptInSubmittedMessage(iframe) {
         submittedMessageDiv.appendChild(meetingsDivElement);
         submittedMessageDiv.appendChild(meetingsScriptElement);
     }
+}
+
+function observeDOMChanges(iframe) {
+    console.log('loading iframe');
+    var observer = new MutationObserver(function(mutationsList, observer) {
+        for (var mutation of mutationsList) {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                var addedNode = Array.from(mutation.addedNodes).find(node => node.classList.contains('submitted-message'));
+                if (addedNode) {
+                    insertScriptInSubmittedMessage(iframe);
+                    break;
+                }
+            }
+        }
+    });
+    observer.observe(iframe.contentDocument, { childList: true, subtree: true });
 }
