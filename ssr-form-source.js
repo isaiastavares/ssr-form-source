@@ -3,6 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
     
     if (iframe) {
         var currentSrc = iframe.src;
-        iframe.src = currentSrc + (currentSrc.includes('?') ? '&' : '?') + 'source=' + encodeURIComponent(window.location.href);
+        iframe.src = currentSrc + (currentSrc.includes('?') ? '&' : '?') + 'utm_source=' + encodeURIComponent(window.location.href);
     }
 });
