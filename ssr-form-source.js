@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+window.addEventListener('load', function () {
     var iframe = document.getElementById('ssr-form');
     
     if (iframe) {
