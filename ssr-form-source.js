@@ -5,7 +5,7 @@ window.addEventListener('load', function () {
     var currentSrc = $('#ssr-form').attr('src');
     
     // Adicionar o parâmetro utm_source
-    var newSrc = currentSrc + (currentSrc.includes('?') ? '&' : '?') + 'utm_source=' + encodeURIComponent(window.location.href);
+    var newSrc = currentSrc + (currentSrc.includes('?') ? '#' : '#') + 'utm_source=' + encodeURIComponent(window.location.href);
     
     // Definir o novo valor do atributo src
     $('#ssr-form').attr('src', newSrc);
