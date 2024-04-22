@@ -4,7 +4,7 @@ window.addEventListener('load', function () {
 
     var url = window.location.origin + window.location.pathname;
     
-    queryString += 'source=' + url;
+    queryString += 'website=' + url;
     
     queryParams.forEach(function(param, index) {
         queryString += '&' + param;
