@@ -2,7 +2,10 @@ window.addEventListener('load', function () {
     const queryParams = window.location.search.substring(1).split('&');
     var queryString = '';
 
-    queryString += 'source=' + document.referrer
+    var url = window.location.href;
+    var domain = new URL(url).origin;
+    
+    queryString += 'source=' + domain;
     
     queryParams.forEach(function(param, index) {
         queryString += '&' + param;
